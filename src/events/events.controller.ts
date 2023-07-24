@@ -5,21 +5,22 @@ import {
   Get,
   HttpCode,
   Logger,
+  NotFoundException,
   Param,
   ParseIntPipe,
   Patch,
   Post,
 } from '@nestjs/common';
-import { CreateEventDto } from './create-event.dto';
-import { UpdateEventDto } from './update-event.dto';
-import { Event } from './event.entity';
+import { CreateEventDto } from './dto/create-event.dto';
+import { UpdateEventDto } from './dto/update-event.dto';
+import { Event } from './entities/event.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 @Controller('events')
 export class EventsController {
   private readonly logger = new Logger(EventsController.name);
-  
+
   constructor(
     @InjectRepository(Event)
     private readonly eventsRepository: Repository<Event>,
@@ -32,12 +33,18 @@ export class EventsController {
   }
 
   @Get(':id')
-  findOne(@Param('id', new ParseIntPipe()) id) {
-    return this.eventsRepository.findOne({
+  async findOne(@Param('id', new ParseIntPipe()) id) {
+    const event = await this.eventsRepository.findOne({
       where: {
         id,
       },
     });
+
+    if (!event) {
+      throw new NotFoundException(`No event found with id ${id}`);
+    }
+
+    return event;
   }
 
   @Post()
