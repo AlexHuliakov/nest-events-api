@@ -5,56 +5,65 @@ import {
   Get,
   HttpCode,
   Param,
+  ParseIntPipe,
   Patch,
   Post,
 } from '@nestjs/common';
 import { CreateEventDto } from './create-event.dto';
 import { UpdateEventDto } from './update-event.dto';
 import { Event } from './event.entity';
+import { Like, MoreThan, Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Controller('events')
 export class EventsController {
-  private events: Event[] = [];
+  constructor(
+    @InjectRepository(Event)
+    private readonly eventsRepository: Repository<Event>,
+  ) {}
+
   @Get()
   findAll() {
-    return this.events;
+    return this.eventsRepository.find();
   }
 
   @Get(':id')
-  findOne(@Param('id') id) {
-    return this.events.find((event) => event.id === parseInt(id));
+  findOne(@Param('id', new ParseIntPipe()) id) {
+    return this.eventsRepository.findOne({
+      where: {
+        id,
+      },
+    });
   }
 
   @Post()
   create(@Body() input: CreateEventDto) {
-    const event = {
-      ...input,
-      when: new Date(input.when),
-      id: this.events.length + 1,
-    };
-
-    this.events.push(event);
-    return event;
+    return (
+      this,
+      this.eventsRepository.save({
+        ...input,
+        when: new Date(input.when),
+      })
+    );
   }
 
   @Patch(':id')
-  update(@Param('id') id, @Body() input: UpdateEventDto) {
-    const index = this.events.findIndex((event) => event.id === parseInt(id));
-    const event = this.events[index];
+  async update(
+    @Param('id', new ParseIntPipe()) id,
+    @Body() input: UpdateEventDto,
+  ) {
+    const event = await this.findOne(id);
 
-    const newEvent = {
+    return this.eventsRepository.save({
       ...event,
       ...input,
       when: input.when ? new Date(input.when) : event.when,
-    };
-
-    this.events[index] = newEvent;
-    return newEvent;
+    });
   }
 
   @Delete(':id')
   @HttpCode(204)
-  remove(@Param('id') id) {
-    this.events = this.events.filter((event) => event.id !== parseInt(id));
+  remove(@Param('id', new ParseIntPipe()) id) {
+    return this.eventsRepository.delete(id);
   }
 }
