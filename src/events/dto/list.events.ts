@@ -1,4 +1,4 @@
-import { IsEnum, IsNumber, IsOptional } from 'class-validator';
+import { IsOptional } from 'class-validator';
 
 export enum WhenEventFilter {
   All = 1,

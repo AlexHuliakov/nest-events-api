@@ -26,11 +26,10 @@ export class UsersController {
         { email: createUserDto.email },
       ],
     });
-    
+
     console.log(existing);
-    
-    if (existing)
-    {
+
+    if (existing) {
       throw new BadRequestException('Such user already exists');
     }
 

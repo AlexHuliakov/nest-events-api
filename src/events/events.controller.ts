@@ -21,7 +21,6 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { EventsService } from './events.service';
 import { ListEvents } from './dto/list.events';
-import { PaginateOptions } from 'src/pagination/paginator';
 
 @Controller('events')
 export class EventsController {
