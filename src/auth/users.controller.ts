@@ -27,8 +27,6 @@ export class UsersController {
       ],
     });
 
-    console.log(existing);
-
     if (existing) {
       throw new BadRequestException('Such user already exists');
     }

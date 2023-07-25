@@ -12,5 +12,6 @@ export default registerAs(
     database: process.env.DB_DATABASE,
     entities: ['dist/**/*.entity{.ts,.js}'],
     synchronize: true,
+    logging: ['query', 'error'],
   }),
 );

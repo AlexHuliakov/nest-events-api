@@ -1,8 +1,11 @@
 import { Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { User } from 'src/auth/user.entity';
 import { paginate, PaginateOptions } from 'src/pagination/paginator';
 import { DeleteResult, Repository } from 'typeorm';
+import { CreateEventDto } from './dto/create-event.dto';
 import { ListEvents, WhenEventFilter } from './dto/list.events';
+import { UpdateEventDto } from './dto/update-event.dto';
 import { AttendeeAnswer } from './entities/attendee.entity';
 import { Event } from './entities/event.entity';
 
@@ -29,6 +32,7 @@ export class EventsService {
 
   public getEventsWithAttendeeCount() {
     return this.getEventsBaseQuery()
+      .leftJoinAndSelect('event.organizer', 'organizer')
       .loadRelationCountAndMap('event.attendeeCount', 'event.attendees')
       .loadRelationCountAndMap(
         'event.attendeeAcceptedCount',
@@ -105,5 +109,27 @@ export class EventsService {
       .delete()
       .where('event.id = :id', { id })
       .execute();
+  }
+
+  public async createEvent(event: CreateEventDto, user: User): Promise<Event> {
+    return (
+      this,
+      this.eventRepository.save({
+        ...event,
+        organizer: user,
+        when: new Date(event.when),
+      })
+    );
+  }
+
+  public async updateEvent(input: UpdateEventDto, user: User): Promise<Event> {
+    return (
+      this,
+      this.eventRepository.save({
+        ...input,
+        organizer: user,
+        when: new Date(input.when),
+      })
+    );
   }
 }
