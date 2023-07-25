@@ -13,15 +13,14 @@ import {
   Controller,
   ParseIntPipe,
   ValidationPipe,
+  UseInterceptors,
+  SerializeOptions,
   NotFoundException,
   ForbiddenException,
-  SerializeOptions,
-  UseInterceptors,
   ClassSerializerInterceptor,
 } from '@nestjs/common';
 import { User } from 'src/auth/user.entity';
 import { ListEvents } from './dto/list.events';
-import { Event } from './entities/event.entity';
 import { EventsService } from './events.service';
 import { CurrentUser } from 'src/auth/user.decorator';
 import { CreateEventDto } from './dto/create-event.dto';
@@ -34,9 +33,7 @@ import { AuthGuardJwt } from 'src/auth/guards/auth-guard.jwt';
 export class EventsController {
   private readonly logger = new Logger(EventsController.name);
 
-  constructor(
-    private readonly eventsService: EventsService,
-  ) {}
+  constructor(private readonly eventsService: EventsService) {}
 
   @Get()
   @UsePipes(new ValidationPipe({ transform: true }))
@@ -54,8 +51,8 @@ export class EventsController {
 
   @Get(':id')
   @UseInterceptors(ClassSerializerInterceptor)
-  async findOne(@Param('id', new ParseIntPipe()) id) {
-    const event = await this.eventsService.getEvent(id);
+  async findOne(@Param('id', ParseIntPipe) id) {
+    const event = await this.eventsService.getEventWithAttendeeCount(id);
 
     if (!event) {
       throw new NotFoundException(`No event found with id ${id}`);
@@ -75,11 +72,11 @@ export class EventsController {
   @UseGuards(AuthGuardJwt)
   @UseInterceptors(ClassSerializerInterceptor)
   async update(
-    @Param('id', new ParseIntPipe()) id,
+    @Param('id', ParseIntPipe) id,
     @Body() input: UpdateEventDto,
     @CurrentUser() user: User,
   ) {
-    const event = await this.findOne(id);
+    const event = await this.eventsService.findOne(id);
 
     if (event.organizer.id !== user.id) {
       throw new ForbiddenException();
@@ -91,8 +88,8 @@ export class EventsController {
   @Delete(':id')
   @UseGuards(AuthGuardJwt)
   @HttpCode(204)
-  async remove(@Param('id', new ParseIntPipe()) id, @CurrentUser() user: User) {
-    const event = await this.findOne(id);
+  async remove(@Param('id', ParseIntPipe) id, @CurrentUser() user: User) {
+    const event = await this.eventsService.findOne(id);
     if (!event) {
       throw new NotFoundException(`No event found with id ${id}`);
     }

@@ -13,16 +13,16 @@ export class PaginateResult<T> {
   }
   @Expose()
   data: T[];
-  
+
   @Expose()
   limit: number;
-  
+
   @Expose()
   first: number;
-  
+
   @Expose()
   last: number;
-  
+
   @Expose()
   total: number;
 }

@@ -15,25 +15,23 @@ export class Attendee {
   @Expose()
   id: number;
 
-  @Column()
-  @Expose()
-  name: string;
-
   @ManyToOne(() => Event, (event) => event.attendees, {
-    nullable: false,
+    nullable: true,
+    onDelete: 'CASCADE',
   })
   event: Event;
 
   @Column()
   eventId: number;
-  
+
   @Column('enum', { enum: AttendeeAnswer, default: AttendeeAnswer.Accepted })
   @Expose()
   answer: AttendeeAnswer;
-  
+
   @ManyToOne(() => User, (user) => user.attended)
+  @Expose()
   user: User;
-  
+
   @Column()
   userId: number;
 }
