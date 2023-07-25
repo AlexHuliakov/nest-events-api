@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { EventsModule } from './events/events.module';
+import { AuthModule } from './auth/auth.module';
 import ormConfig from './config/orm.config';
 import ormConfigProd from './config/orm.config.prod';
 @Module({
@@ -18,6 +19,7 @@ import ormConfigProd from './config/orm.config.prod';
         process.env.NODE_ENV === 'production' ? ormConfigProd : ormConfig,
     }),
     EventsModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
