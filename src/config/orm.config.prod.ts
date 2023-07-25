@@ -12,7 +12,7 @@ export default registerAs(
     username: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DATABASE,
-    entities: [Event, Attendee],
+    entities: ['dist/**/*.entity{.ts,.js}'],
     synchronize: false,
   }),
 );
