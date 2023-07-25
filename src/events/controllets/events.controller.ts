@@ -19,13 +19,15 @@ import {
   ForbiddenException,
   ClassSerializerInterceptor,
 } from '@nestjs/common';
-import { User } from 'src/auth/user.entity';
-import { ListEvents } from './dto/list.events';
-import { EventsService } from './events.service';
-import { CurrentUser } from 'src/auth/user.decorator';
-import { CreateEventDto } from './dto/create-event.dto';
-import { UpdateEventDto } from './dto/update-event.dto';
-import { AuthGuardJwt } from 'src/auth/guards/auth-guard.jwt';
+import { User } from '../../auth/user.entity';
+import { ListEvents } from '../dto/list.events';
+import { EventsService } from '../events.service';
+import { CurrentUser } from '../../auth/user.decorator';
+import { CreateEventDto } from '../dto/create-event.dto';
+import { UpdateEventDto } from '../dto/update-event.dto';
+import { AuthGuardJwt } from '../../auth/guards/auth-guard.jwt';
+import { Event } from '../entities/event.entity';
+
 @Controller('events')
 @SerializeOptions({
   strategy: 'excludeAll',

@@ -1,6 +1,6 @@
 import { Expose } from 'class-transformer';
-import { User } from 'src/auth/user.entity';
-import { PaginateResult } from 'src/pagination/paginator';
+import { User } from '../../auth/user.entity';
+import { PaginateResult } from '../../pagination/paginator';
 import {
   Column,
   Entity,

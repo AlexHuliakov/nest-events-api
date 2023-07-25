@@ -12,6 +12,7 @@ export default registerAs(
     database: process.env.DB_DATABASE,
     entities: ['dist/**/*.entity{.ts,.js}'],
     synchronize: true,
+    dropSchema: Boolean(parseInt(process.env.DB_DROP_SCHEMA)),
     logging: ['query', 'error'],
   }),
 );

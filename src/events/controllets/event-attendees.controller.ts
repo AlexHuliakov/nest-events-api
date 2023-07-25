@@ -7,7 +7,7 @@ import {
   ClassSerializerInterceptor,
   ParseIntPipe,
 } from '@nestjs/common';
-import { AttendeesService } from './attendees.service';
+import { AttendeesService } from '../attendees.service';
 
 @Controller('events/:eventId/attendees')
 @SerializeOptions({ strategy: 'excludeAll' })

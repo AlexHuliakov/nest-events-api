@@ -1,13 +1,14 @@
 import { Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from 'src/auth/user.entity';
-import { paginate, PaginateOptions } from 'src/pagination/paginator';
+import { User } from '../auth/user.entity';
+import { paginate, PaginateOptions } from '../pagination/paginator';
 import { DeleteResult, Repository, SelectQueryBuilder } from 'typeorm';
 import { CreateEventDto } from './dto/create-event.dto';
 import { ListEvents, WhenEventFilter } from './dto/list.events';
 import { UpdateEventDto } from './dto/update-event.dto';
 import { AttendeeAnswer } from './entities/attendee.entity';
 import { Event, PaginatedEvents } from './entities/event.entity';
+
 
 export class EventsService {
   private readonly logger = new Logger(EventsService.name);

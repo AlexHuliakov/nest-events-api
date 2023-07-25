@@ -13,6 +13,7 @@ import ormConfigProd from './config/orm.config.prod';
       isGlobal: true,
       load: [ormConfig],
       expandVariables: true,
+      envFilePath: `${process.env.NODE_ENV}.env`,
     }),
     TypeOrmModule.forRootAsync({
       useFactory:

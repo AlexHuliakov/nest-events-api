@@ -13,12 +13,12 @@ import {
   NotFoundException,
   ClassSerializerInterceptor,
 } from '@nestjs/common';
-import { User } from 'src/auth/user.entity';
-import { EventsService } from './events.service';
-import { CurrentUser } from 'src/auth/user.decorator';
-import { AttendeesService } from './attendees.service';
-import { AuthGuardJwt } from 'src/auth/guards/auth-guard.jwt';
-import { CreateAttendeeDto } from './dto/create-attendee.dto';
+import { User } from '../../auth/user.entity';
+import { EventsService } from '../events.service';
+import { CurrentUser } from '../../auth/user.decorator';
+import { AttendeesService } from '../attendees.service';
+import { AuthGuardJwt } from '../../auth/guards/auth-guard.jwt';
+import { CreateAttendeeDto } from '../dto/create-attendee.dto';
 
 @Controller('current-user-event-attendance')
 @SerializeOptions({ strategy: 'excludeAll' })
