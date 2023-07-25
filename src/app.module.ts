@@ -6,7 +6,6 @@ import { AppService } from './app.service';
 import { EventsModule } from './events/events.module';
 import ormConfig from './config/orm.config';
 import ormConfigProd from './config/orm.config.prod';
-
 @Module({
   imports: [
     ConfigModule.forRoot({
