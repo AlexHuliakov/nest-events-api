@@ -10,12 +10,18 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Query,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { CreateEventDto } from './dto/create-event.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
 import { Event } from './entities/event.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
+import { EventsService } from './events.service';
+import { ListEvents } from './dto/list.events';
+import { PaginateOptions } from 'src/pagination/paginator';
 
 @Controller('events')
 export class EventsController {
@@ -24,21 +30,25 @@ export class EventsController {
   constructor(
     @InjectRepository(Event)
     private readonly eventsRepository: Repository<Event>,
+    private readonly eventsService: EventsService,
   ) {}
 
   @Get()
-  findAll() {
-    this.logger.log('Find all events');
-    return this.eventsRepository.find();
+  @UsePipes(new ValidationPipe({ transform: true }))
+  findAll(@Query() filter: ListEvents) {
+    return this.eventsService.getEventsWithAttendeeCountFilteredPaginated(
+      filter,
+      {
+        total: true,
+        currentPage: filter.page,
+        limit: 10,
+      },
+    );
   }
 
   @Get(':id')
   async findOne(@Param('id', new ParseIntPipe()) id) {
-    const event = await this.eventsRepository.findOne({
-      where: {
-        id,
-      },
-    });
+    const event = await this.eventsService.getEvent(id);
 
     if (!event) {
       throw new NotFoundException(`No event found with id ${id}`);
@@ -74,7 +84,13 @@ export class EventsController {
 
   @Delete(':id')
   @HttpCode(204)
-  remove(@Param('id', new ParseIntPipe()) id) {
-    return this.eventsRepository.delete(id);
+  async remove(@Param('id', new ParseIntPipe()) id) {
+    const { affected } = await this.eventsRepository.delete(id);
+
+    if (affected === 0) {
+      throw new NotFoundException(`No event found with id ${id}`);
+    }
+
+    return null;
   }
 }
