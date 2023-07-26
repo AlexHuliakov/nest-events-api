@@ -37,7 +37,10 @@ describe('EventsService', () => {
         .spyOn(repository, 'save')
         .mockResolvedValue({ id: 1 } as Event);
       expect(
-        service.updateEvent(new UpdateEventDto({ id: 1, name: 'New name' }), new User()),
+        service.updateEvent(
+          new UpdateEventDto({ id: 1, name: 'New name' }),
+          new User(),
+        ),
       ).resolves.toEqual({ id: 1 });
     });
   });

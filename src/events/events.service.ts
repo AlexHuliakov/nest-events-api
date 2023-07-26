@@ -9,7 +9,6 @@ import { UpdateEventDto } from './dto/update-event.dto';
 import { AttendeeAnswer } from './entities/attendee.entity';
 import { Event, PaginatedEvents } from './entities/event.entity';
 
-
 export class EventsService {
   private readonly logger = new Logger(EventsService.name);
   constructor(

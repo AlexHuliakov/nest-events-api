@@ -5,6 +5,6 @@ import { EntityNotFoundError } from 'typeorm';
 @Catch(EntityNotFoundError)
 export class EntityNotFoundErrorFilter extends BaseExceptionFilter {
   catch(exception, host) {
-    return  new NotFoundException('Entity not found');
+    return new NotFoundException('Entity not found');
   }
 }

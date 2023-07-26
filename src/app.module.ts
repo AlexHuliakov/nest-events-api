@@ -9,7 +9,7 @@ import ormConfig from './config/orm.config';
 import ormConfigProd from './config/orm.config.prod';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { SchoolModule } from './school/school.module';
+
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -29,7 +29,6 @@ import { SchoolModule } from './school/school.module';
     }),
     EventsModule,
     AuthModule,
-    SchoolModule
   ],
   controllers: [AppController],
   providers: [AppService],

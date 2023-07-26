@@ -1,41 +1,21 @@
-import { BadRequestException, Body, Controller, Post } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 import { AuthService } from './auth.service';
+import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create.user.dto';
-import { User } from './user.entity';
+import { Body, Controller, Post } from '@nestjs/common';
 
 @Controller('users')
 export class UsersController {
   constructor(
     private readonly authService: AuthService,
-    @InjectRepository(User) private readonly userRepository: Repository<User>,
+    private readonly userService: UserService,
   ) {}
 
   @Post('register')
   async create(@Body() createUserDto: CreateUserDto) {
-    const user = new User();
-
-    if (createUserDto.password !== createUserDto.passwordConfirm) {
-      throw new BadRequestException('Passwords do not match');
-    }
-
-    const existing = await this.userRepository.findOne({
-      where: [
-        { username: createUserDto.username },
-        { email: createUserDto.email },
-      ],
-    });
-
-    if (existing) {
-      throw new BadRequestException('Such user already exists');
-    }
-
-    Object.assign(user, createUserDto);
-    user.password = await this.authService.hashPassword(user.password);
+    const user = await this.userService.create(createUserDto);
 
     return {
-      ...(await this.userRepository.save(user)),
+      ...user,
       token: this.authService.getTokenForUser(user),
     };
   }
