@@ -85,8 +85,8 @@ Here is the updated API routes documentation with descriptions:
 ### *Auth & Users*
 
 ### Authenticate
-- Method: POST
-- URL: {{URL}}/auth/login
+- Method: **POST**
+- URL: `{{URL}}/auth/login`
 - Data: 
   ```
   {
@@ -94,18 +94,18 @@ Here is the updated API routes documentation with descriptions:
       "password": "password"
   }
   ```
-- Requires Auth: No
+- Requires Auth: **No**
 - Description: This endpoint allows users to authenticate by sending a POST request with their username and password. After successful authentication, the server responds with a JSON object containing a token.
 
 ### Current User Profile
-- Method: GET
-- URL: {{URL}}/auth/profile
-- Requires Auth: Yes
+- Method: **GET**
+- URL: `{{URL}}/auth/profile`
+- Requires Auth: **Yes**
 - Description: This endpoint allows authenticated users to retrieve their own profile information.
 
 ### Register
-- Method: POST
-- URL: {{URL}}/users
+- Method: **POST**
+- URL: `{{URL}}/users`
 - Data: 
   ```
   {
@@ -117,46 +117,46 @@ Here is the updated API routes documentation with descriptions:
       "email": "mister@gmail.com"
   }
   ```
-- Requires Auth: No
+- Requires Auth: **No**
 - Description: This endpoint allows users to register by sending a POST request with their desired username, password, first name, last name, and email.
 
 ### *Events Attendance*
 
 ### Event Attendees
-- Method: GET
-- URL: {{URL}}/events/:id/attendees
-- Requires Auth: No
+- Method: **GET**
+- URL: `{{URL}}/events/:id/attendees`
+- Requires Auth: **No**
 - Description: This endpoint allows users to retrieve the list of attendees for a specific event with ID.
 
 ### Attend Event
-- Method: PUT
-- URL: {{URL}}/current-user-event-attendance/:id
+- Method: **PUT**
+- URL: `{{URL}}/current-user-event-attendance/:id`
 - Data: 
   ```
   {
       "answer": 1
   }
   ```
-- Requires Auth: Yes
+- Requires Auth: **Yes**
 - Description: This endpoint allows authenticated users to mark their attendance for a specific event with ID. Users can provide their response using the "answer" field in the request body.
 
 ### Specific Event Attendance By Current User
-- Method: GET
-- URL: {{URL}}/current-user-event-attendance/:id
-- Requires Auth: Yes
+- Method: **GET**
+- URL: `{{URL}}/current-user-event-attendance/:id`
+- Requires Auth: **Yes**
 - Description: This endpoint allows authenticated users to retrieve their attendance status for a specific event with ID.
 
 ### All Events Attendance By Current User
-- Method: GET
-- URL: {{URL}}/current-user-event-attendance
-- Requires Auth: Yes
+- Method: **GET**
+- URL: `{{URL}}/current-user-event-attendance`
+- Requires Auth: **Yes**
 - Description: This endpoint allows authenticated users to retrieve their attendance status for all events.
 
 ### *Events*
 
 ### Create Event
-- Method: POST
-- URL: {{URL}}/events
+- Method: **POST**
+- URL: `{{URL}}/events`
 - Data: 
   ```
   {
@@ -166,30 +166,30 @@ Here is the updated API routes documentation with descriptions:
       "when": "2023-06-15 21:00:00"
   }
   ```
-- Requires Auth: Yes
+- Requires Auth: **Yes**
 - Description: This endpoint allows authenticated users to create new events by sending a POST request with event details like name, description, address, and time.
 
 ### Event List
-- Method: GET
-- URL: {{URL}}/events
-- Requires Auth: No
+- Method: **GET**
+- URL: `{{URL}}/events`
+- Requires Auth: **No**
 - Description: This endpoint allows authenticated users to retrieve a list of events.
 
 ### Delete Event
-- Method: DELETE
-- URL: {{URL}}/events/:id
-- Requires Auth: Yes
+- Method: **DELETE**
+- URL: `{{URL}}/events/:id`
+- Requires Auth: **Yes**
 - Description: This endpoint allows users with appropriate permissions to delete an event with ID.
 
 ### Events Organized By User
-- Method: GET
-- URL: {{URL}}/events-organized-by-user/:id
-- Requires Auth: No
+- Method: **GET**
+- URL: `{{URL}}/events-organized-by-user/:id`
+- Requires Auth: **No**
 - Description: This endpoint allows users to retrieve a list of events organized by the user with ID.
 
 ### Get Single Event
-- Method: GET
-- URL: {{URL}}/events/:id
-- Requires Auth: No
+- Method: **GET**
+- URL: `{{URL}}/events/:id`
+- Requires Auth: **No**
 - Description: This endpoint allows users to retrieve information about a specific event with ID.
 
