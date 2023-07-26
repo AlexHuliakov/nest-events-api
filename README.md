@@ -1,30 +1,147 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Description
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+This is an Event Scheduling RESTful API that deals with authentication, user management, events, and event attendance.
+## Features
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+- **Create and Manage Events**: Easily create new events, update their details, and delete them as needed.
 
-## Description
+- **Event Attendees**: Keep track of event attendees, manage their statuses, and handle participant information.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- **Search and Filter**: Efficiently search and filter events based on various criteria such as date, category, location, etc.
+
+- **GraphQL API**: Utilize the power of GraphQL to fetch precisely the data you need, optimizing API performance.
+
+## API Endpoints
+
+Here is the updated API routes documentation with descriptions:
+
+### *Auth & Users*
+
+### Authenticate
+- Method: POST
+- URL: {{URL}}/auth/login
+- Data: 
+  ```
+  {
+      "username": "mister1",
+      "password": "password"
+  }
+  ```
+- Requires Auth: No
+- Description: This endpoint allows users to authenticate by sending a POST request with their username and password. After successful authentication, the server responds with a JSON object containing a token.
+
+### Current User Profile
+- Method: GET
+- URL: {{URL}}/auth/profile
+- Requires Auth: Yes
+- Description: This endpoint allows authenticated users to retrieve their own profile information.
+
+### Register
+- Method: POST
+- URL: {{URL}}/users
+- Data: 
+  ```
+  {
+      "username": "mister1",
+      "password": "password",
+      "retypedPassword": "password",
+      "firstName": "John",
+      "lastName": "Terry2",
+      "email": "mister@gmail.com"
+  }
+  ```
+- Requires Auth: No
+- Description: This endpoint allows users to register by sending a POST request with their desired username, password, first name, last name, and email.
+
+### *Events Attendance*
+
+### Event Attendees
+- Method: GET
+- URL: {{URL}}/events/:id/attendees
+- Requires Auth: No
+- Description: This endpoint allows users to retrieve the list of attendees for a specific event with ID.
+
+### Attend Event
+- Method: PUT
+- URL: {{URL}}/current-user-event-attendance/:id
+- Data: 
+  ```
+  {
+      "answer": 1
+  }
+  ```
+- Requires Auth: Yes
+- Description: This endpoint allows authenticated users to mark their attendance for a specific event with ID. Users can provide their response using the "answer" field in the request body.
+
+### Specific Event Attendance By Current User
+- Method: GET
+- URL: {{URL}}/current-user-event-attendance/:id
+- Requires Auth: Yes
+- Description: This endpoint allows authenticated users to retrieve their attendance status for a specific event with ID.
+
+### All Events Attendance By Current User
+- Method: GET
+- URL: {{URL}}/current-user-event-attendance
+- Requires Auth: Yes
+- Description: This endpoint allows authenticated users to retrieve their attendance status for all events.
+
+### *Events*
+
+### Create Event
+- Method: POST
+- URL: {{URL}}/events
+- Data: 
+  ```
+  {
+      "name": "Interesting Party",
+      "description": "That is a crazy event, must go there!",
+      "address": "Local St 101",
+      "when": "2023-06-15 21:00:00"
+  }
+  ```
+- Requires Auth: Yes
+- Description: This endpoint allows authenticated users to create new events by sending a POST request with event details like name, description, address, and time.
+
+### Event List
+- Method: GET
+- URL: {{URL}}/events
+- Requires Auth: No
+- Description: This endpoint allows authenticated users to retrieve a list of events.
+
+### Delete Event
+- Method: DELETE
+- URL: {{URL}}/events/:id
+- Requires Auth: Yes
+- Description: This endpoint allows users with appropriate permissions to delete an event with ID.
+
+### Events Organized By User
+- Method: GET
+- URL: {{URL}}/events-organized-by-user/:id
+- Requires Auth: No
+- Description: This endpoint allows users to retrieve a list of events organized by the user with ID.
+
+### Get Single Event
+- Method: GET
+- URL: {{URL}}/events/:id
+- Requires Auth: No
+- Description: This endpoint allows users to retrieve information about a specific event with ID.
+
+
+## Technologies Used
+
+- **Nest.js**: A progressive Node.js framework for building efficient, scalable, and maintainable server-side applications.
+
+- **TypeORM**: An Object-Relational Mapping (ORM) that simplifies database interactions with strong TypeScript support.
+
+- **Postgres**: A powerful relational database system known for its performance and reliability.
+
+- **GraphQL**: A query language for APIs that enables precise data retrieval and reduces over-fetching.
+
+- **Apollo Server**: A GraphQL server implementation that works seamlessly with Node.js and provides essential features for building GraphQL APIs.
+
+- **Jest**: A widely-used testing framework for JavaScript and TypeScript applications, ensuring code reliability through unit and integration tests.
+
+- **Docker**: A containerization platform that allows for easy deployment and scaling of applications.
 
 ## Installation
 
@@ -34,16 +151,33 @@ $ pnpm install
 
 ## Running the app
 
-```bash
-# development
-$ pnpm run start
+1. Host the Database.
 
-# watch mode
-$ pnpm run start:dev
+  You can host PostgreSQL for local development using Docker:
 
-# production mode
-$ pnpm run start:prod
-```
+  ```bash
+  docker-compose up -d
+  ```
+2. Fill `dev.env` file. Here is an example:
+  ```
+  DB_HOST=localhost
+  DB_PORT=5432
+  DB_USERNAME=postgres
+  DB_PASSWORD=example
+  DB_DATABASE=nest-events
+  JWT_SECRET=secret
+  ```
+3. Run the app.
+  ```bash
+  # development
+  $ pnpm run start
+
+  # watch mode
+  $ pnpm run start:dev
+
+  # production mode
+  $ pnpm run start:prod
+  ```
 
 ## Test
 
@@ -57,17 +191,3 @@ $ pnpm run test:e2e
 # test coverage
 $ pnpm run test:cov
 ```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
