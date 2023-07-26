@@ -36,7 +36,7 @@ export class User {
   @Expose()
   lastName: string;
 
-  @OneToOne(() => Profile)
+  @OneToOne(() => Profile, { nullable: true })
   @JoinColumn()
   @Expose()
   profile: Profile;
