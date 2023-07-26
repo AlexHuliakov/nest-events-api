@@ -11,6 +11,73 @@ This is an Event Scheduling RESTful API that deals with authentication, user man
 
 - **GraphQL API**: Utilize the power of GraphQL to fetch precisely the data you need, optimizing API performance.
 
+
+## Technologies Used
+
+- **Nest.js**: A progressive Node.js framework for building efficient, scalable, and maintainable server-side applications.
+
+- **TypeORM**: An Object-Relational Mapping (ORM) that simplifies database interactions with strong TypeScript support.
+
+- **Postgres**: A powerful relational database system known for its performance and reliability.
+
+- **GraphQL**: A query language for APIs that enables precise data retrieval and reduces over-fetching.
+
+- **Apollo Server**: A GraphQL server implementation that works seamlessly with Node.js and provides essential features for building GraphQL APIs.
+
+- **Jest**: A widely-used testing framework for JavaScript and TypeScript applications, ensuring code reliability through unit and integration tests.
+
+- **Docker**: A containerization platform that allows for easy deployment and scaling of applications.
+
+## Installation
+Project is using `pnpm` as package manager, but you can use `npm` or `yarn` as well.
+```bash
+$ pnpm install
+```
+
+## Running the app
+
+1. Host the Database.
+
+  You can host PostgreSQL for local development using Docker:
+
+  ```bash
+  docker-compose up -d
+  ```
+2. Fill `dev.env` file. Here is an example:
+  ```
+  DB_HOST=localhost
+  DB_PORT=5432
+  DB_USERNAME=postgres
+  DB_PASSWORD=example
+  DB_DATABASE=nest-events
+  JWT_SECRET=secret
+  ```
+3. Run the app.
+  ```bash
+  # development
+  $ pnpm run start
+
+  # watch mode
+  $ pnpm run start:dev
+
+  # production mode
+  $ pnpm run start:prod
+  ```
+
+## Test
+
+```bash
+# unit tests
+$ pnpm run test
+
+# e2e tests
+$ pnpm run test:e2e
+
+# test coverage
+$ pnpm run test:cov
+```
+
+
 ## API Endpoints
 
 Here is the updated API routes documentation with descriptions:
@@ -126,68 +193,3 @@ Here is the updated API routes documentation with descriptions:
 - Requires Auth: No
 - Description: This endpoint allows users to retrieve information about a specific event with ID.
 
-
-## Technologies Used
-
-- **Nest.js**: A progressive Node.js framework for building efficient, scalable, and maintainable server-side applications.
-
-- **TypeORM**: An Object-Relational Mapping (ORM) that simplifies database interactions with strong TypeScript support.
-
-- **Postgres**: A powerful relational database system known for its performance and reliability.
-
-- **GraphQL**: A query language for APIs that enables precise data retrieval and reduces over-fetching.
-
-- **Apollo Server**: A GraphQL server implementation that works seamlessly with Node.js and provides essential features for building GraphQL APIs.
-
-- **Jest**: A widely-used testing framework for JavaScript and TypeScript applications, ensuring code reliability through unit and integration tests.
-
-- **Docker**: A containerization platform that allows for easy deployment and scaling of applications.
-
-## Installation
-
-```bash
-$ pnpm install
-```
-
-## Running the app
-
-1. Host the Database.
-
-  You can host PostgreSQL for local development using Docker:
-
-  ```bash
-  docker-compose up -d
-  ```
-2. Fill `dev.env` file. Here is an example:
-  ```
-  DB_HOST=localhost
-  DB_PORT=5432
-  DB_USERNAME=postgres
-  DB_PASSWORD=example
-  DB_DATABASE=nest-events
-  JWT_SECRET=secret
-  ```
-3. Run the app.
-  ```bash
-  # development
-  $ pnpm run start
-
-  # watch mode
-  $ pnpm run start:dev
-
-  # production mode
-  $ pnpm run start:prod
-  ```
-
-## Test
-
-```bash
-# unit tests
-$ pnpm run test
-
-# e2e tests
-$ pnpm run test:e2e
-
-# test coverage
-$ pnpm run test:cov
-```
