@@ -51,6 +51,7 @@ $ pnpm install
   DB_PASSWORD=example
   DB_DATABASE=nest-events
   JWT_SECRET=secret
+  PORT=3000
   ```
 3. Run the app.
   ```bash
