@@ -79,6 +79,10 @@ $ pnpm run test:cov
 ```
 
 
+## Deploy
+
+The app is deployed using [adaptable.io](adaptable.io) and can be accessed at `https://nest-events-api.adaptable.app`.
+
 ## API Endpoints
 
 Here is the updated API routes documentation with descriptions:
